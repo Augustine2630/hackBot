@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Bot extends TelegramLongPollingBot {
+
     public static void main(String[] args) {
         ApiContextInitializer.init();
         TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
@@ -43,7 +44,7 @@ public class Bot extends TelegramLongPollingBot {
         sendMessage.setText(text);
         try {
 
-            setButtons(sendMessage);
+            setStartButtons(sendMessage);
             sendMessage(sendMessage);
 
         } catch (TelegramApiException e) {
@@ -52,23 +53,15 @@ public class Bot extends TelegramLongPollingBot {
     }
 
 
+
 //    public void onUpdateReceived(Update update) {
-//        Model model = new Model();
+//        Update update = new Update();
 //        Message message = update.getMessage();
 //        if (message != null && message.hasText()) {
 //            switch (message.getText()) {
-//                case "/help":
-//                    sendMsg(message, "Чем могу помочь?");
+//                case "абоба":
+//                    sendMsg(message, "Сколько ты сегодня занимался? \n 1.Я ленивый тюлень, валял дурака\n 2. Открыл, заскучал, закрыл.\n 3. Позанимался, но цели не достиг\n 4. Сидел весь день, аж мозг вскипел\n");
 //                    break;
-//                case "/setting":
-//                    sendMsg(message, "Что будем настраивать?");
-//                    break;
-//                default:
-//                    try {
-//                        sendMsg(message, Weather.getWeather(message.getText(), model));
-//                    } catch (IOException e) {
-//                        sendMsg(message, "Город не найден!");
-//                    }
 //            }
 //        }
 //    }
@@ -76,12 +69,27 @@ public class Bot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update){
         Model model = new Model();
         Message message = update.getMessage();
+        String message_text = update.getMessage().getText();
+        long chat_id = update.getMessage().getChatId();
+        SendMessage mess = new SendMessage().setChatId(chat_id).setText(message_text);
+        try {
+            execute(mess); // Sending our message object to user
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
         if (message != null && message.hasText()) {
-            switch (message.getText()) {
-                case "/help":
-                    sendMsg(message, "Чем могу помочь?");
+            switch (message_text) {
+                case "мотивация":
+                    sendMsg(message, "Сколько ты сегодня занимался? \n 1.Я ленивый тюлень, валял дурака\n 2. Открыл, заскучал, закрыл.\n 3. Позанимался, но цели не достиг\n 4. Сидел весь день, аж мозг вскипел\n");
+
                     break;
-                case "/setting":
+                case "цель":
+                    sendMsg(message, "Что будем настраивать?");
+                    break;
+                case "успехи":
+                    sendMsg(message, "Что будем настраивать?");
+                    break;
+                case "поныть хочеца":
                     sendMsg(message, "Что будем настраивать?");
                     break;
                 default:
@@ -95,7 +103,8 @@ public class Bot extends TelegramLongPollingBot {
     }
 
 
-    public void setButtons(SendMessage sendMessage) {
+
+    public void setStartButtons(SendMessage sendMessage) {
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         sendMessage.setReplyMarkup(replyKeyboardMarkup);
         replyKeyboardMarkup.setSelective(true);
@@ -105,25 +114,22 @@ public class Bot extends TelegramLongPollingBot {
         List<KeyboardRow> keyboardRowList = new ArrayList<>();
         KeyboardRow keyboardFirstRow = new KeyboardRow();
 
-        keyboardFirstRow.add(new KeyboardButton("/help"));
-        keyboardFirstRow.add(new KeyboardButton("/setting"));
-
-        KeyboardRow keyboardSecondRow = new KeyboardRow();
-
-        keyboardSecondRow.add(new KeyboardButton("/aboba"));
+        keyboardFirstRow.add(new KeyboardButton("мотивация"));
+        keyboardFirstRow.add(new KeyboardButton("цель"));
+        keyboardFirstRow.add(new KeyboardButton("успехи"));
+        keyboardFirstRow.add(new KeyboardButton("поныть хочеца"));
 
         keyboardRowList.add(keyboardFirstRow);
-        keyboardRowList.add(keyboardSecondRow);
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
 
     }
 
 
     public String getBotUsername() {
-        return "netolo_bot";
+        return "testNetoBot";
     }
 
     public String getBotToken() {
-        return "5347349718:AAFhI1P0FNbJL-Eg4ztPKKEOZ2O4iZVDy1o";
+        return "5166573762:AAFlmTqFKoiBzPxEwO2ew5l_T6EzHdYtGr0";
     }
 }
