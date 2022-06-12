@@ -5,6 +5,7 @@ import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.api.objects.Message;
+import org.telegram.telegrambots.api.objects.MessageEntity;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardButton;
@@ -19,7 +20,10 @@ import java.util.List;
 
 public class Bot extends TelegramLongPollingBot {
 
+    List<String> targets = new ArrayList<>();
     SomeCollection someCollection = new SomeCollection();
+
+    PhotoCollection photoCollection = new PhotoCollection();
 
     public static void main(String[] args) {
         ApiContextInitializer.init();
@@ -67,12 +71,15 @@ public class Bot extends TelegramLongPollingBot {
 //            }
 //        }
 //    }
+    String userMessage;
 
     public void onUpdateReceived(Update update) {
+
 
         Model model = new Model();
         Message message = update.getMessage();
         String message_text = update.getMessage().getText();
+
         long chat_id = update.getMessage().getChatId();
 //        SendMessage mess = new SendMessage().setChatId(chat_id).setText(message_text);
 //        try {
@@ -80,6 +87,7 @@ public class Bot extends TelegramLongPollingBot {
 //        } catch (TelegramApiException e) {
 //            e.printStackTrace();
 //        }
+
         if(message_text.equals("/start")){
             sendMsg(message, "выбери");
         }
@@ -142,9 +150,9 @@ public class Bot extends TelegramLongPollingBot {
                         } catch (TelegramApiException e) {
                             e.printStackTrace();
                         }
-                        File file = new File("D:\\dis\\aboba.jpg");
+
                         try {
-                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(file)).setChatId(chat_id).setCaption(someCollection.getRandomBoring());
+                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(photoCollection.getRandomMotivationImg())).setChatId(chat_id).setCaption(someCollection.getRandomMotivation());
 
                             sendPhoto(sendPhoto1);
                         } catch (TelegramApiException e) {
@@ -182,7 +190,7 @@ public class Bot extends TelegramLongPollingBot {
                         }
                         File file = new File("D:\\dis\\aboba.jpg");
                         try {
-                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(file)).setChatId(chat_id).setCaption(someCollection.getRandomBoring());
+                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(photoCollection.getRandomBoringImg())).setChatId(chat_id).setCaption(someCollection.getRandomBoring());
 
                             sendPhoto(sendPhoto1);
                         } catch (TelegramApiException e) {
@@ -220,7 +228,7 @@ public class Bot extends TelegramLongPollingBot {
                         }
                         File file = new File("D:\\dis\\aboba.jpg");
                         try {
-                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(file)).setChatId(chat_id).setCaption(someCollection.getRandomBoring());
+                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(photoCollection.getRandomStudingImg())).setChatId(chat_id).setCaption(someCollection.getRandomStudied());
 
                             sendPhoto(sendPhoto1);
                         } catch (TelegramApiException e) {
@@ -258,7 +266,7 @@ public class Bot extends TelegramLongPollingBot {
                         }
                         File file = new File("D:\\dis\\aboba.jpg");
                         try {
-                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(file)).setChatId(chat_id).setCaption(someCollection.getRandomBoring());
+                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(photoCollection.getRandomBoiledImg())).setChatId(chat_id).setCaption(someCollection.getRandomBoiled());
                             sendPhoto(sendPhoto1);
                         } catch (TelegramApiException e) {
                             throw new RuntimeException(e);
@@ -268,17 +276,186 @@ public class Bot extends TelegramLongPollingBot {
                     }
                     break;
                 case "цель":
+                    if (message_text.equals("цель")) {
+                        SendMessage mess = new SendMessage() // Create a message object object
+                                .setChatId(chat_id)
+                                .setText("цель");
+                        // Create ReplyKeyboardMarkup object
+                        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+                        // Create the keyboard (list of keyboard rows)
+                        List<KeyboardRow> keyboard = new ArrayList<>();
+                        // Create a keyboard row
+                        KeyboardRow row = new KeyboardRow();
+                        // Set each button, you can also use KeyboardButton objects if you need something else than text
+                        row.add("создать цель");
+                        row.add("помощь");
+                        row.add("достингуто");
+                        // Add the first row to the keyboard
+                        keyboard.add(row);
+                        // Create another keyboard row
+                        row = new KeyboardRow();
+                        keyboardMarkup.setKeyboard(keyboard);
+                        // Add it to the message
+                        mess.setReplyMarkup(keyboardMarkup);
+                        try {
+                            sendMessage(mess); // Sending our message object to user
+                        } catch (TelegramApiException e) {
+                            e.printStackTrace();
+                        }
+                        File file = new File("D:\\dis\\aboba.jpg");
+                        try {
+                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(file)).setChatId(chat_id).setCaption(someCollection.getRandomBoring());
+                            sendPhoto(sendPhoto1);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    break;
+                case "поныть":
+                    if (message_text.equals("поныть")) {
+                    SendMessage mess = new SendMessage() // Create a message object object
+                            .setChatId(chat_id)
+                            .setText("Чтобы достичь твоей цели, нужно что?");
+                    // Create ReplyKeyboardMarkup object
+                    ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+                    // Create the keyboard (list of keyboard rows)
+                    List<KeyboardRow> keyboard = new ArrayList<>();
+                    // Create a keyboard row
+                    KeyboardRow row = new KeyboardRow();
+                    // Set each button, you can also use KeyboardButton objects if you need something else than text
+                    row.add("назад");
+                    // Add the first row to the keyboard
+                    keyboard.add(row);
+                    // Create another keyboard row
+                    row = new KeyboardRow();
+                    keyboardMarkup.setKeyboard(keyboard);
+                    // Add it to the message
+                    mess.setReplyMarkup(keyboardMarkup);
+//                        if (update.hasMessage() && update.getMessage().hasText()) {
+//                            // Set variables
+//                            message_text = update.getMessage().getText();
+//                            targets.add(message_text);
+//                        }
+                    try {
+                        sendMessage(mess); // Sending our message object to user
+                    } catch (TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                    File file = new File("D:\\dis\\aboba.jpg");
+                    try {
+                        SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(file)).setChatId(chat_id).setCaption(someCollection.getRandomBoring());
+                        sendPhoto(sendPhoto1);
+                    } catch (TelegramApiException e) {
+                        throw new RuntimeException(e);
+                    } catch (FileNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                    break;
 
+                case "помощь":
+                    if (message_text.equals("помощь")) {
+                        SendMessage mess = new SendMessage() // Create a message object object
+                                .setChatId(chat_id)
+                                .setText("Чтобы достичь твоей цели, нужно что?");
+                        // Create ReplyKeyboardMarkup object
+                        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+                        // Create the keyboard (list of keyboard rows)
+                        List<KeyboardRow> keyboard = new ArrayList<>();
+                        // Create a keyboard row
+                        KeyboardRow row = new KeyboardRow();
+                        // Set each button, you can also use KeyboardButton objects if you need something else than text
+                        row.add("назад");
+                        // Add the first row to the keyboard
+                        keyboard.add(row);
+                        // Create another keyboard row
+                        row = new KeyboardRow();
+                        keyboardMarkup.setKeyboard(keyboard);
+                        // Add it to the message
+                        mess.setReplyMarkup(keyboardMarkup);
+//                        if (update.hasMessage() && update.getMessage().hasText()) {
+//                            // Set variables
+//                            message_text = update.getMessage().getText();
+//                            targets.add(message_text);
+//                        }
+                        try {
+                            sendMessage(mess); // Sending our message object to user
+                        } catch (TelegramApiException e) {
+                            e.printStackTrace();
+                        }
+                        File file = new File("D:\\dis\\aboba.jpg");
+                        try {
+                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(file)).setChatId(chat_id).setCaption(someCollection.getRandomBoring());
+                            sendPhoto(sendPhoto1);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    break;
+                case "записать сообщение":
+                    if (update.hasMessage() && update.getMessage().hasText()) {
+                        // Set variables
+                        message_text = update.getMessage().getText();
+                        targets.add(message_text);
+                    }
+                    break;
+                case "назад":
+                    if (message_text.equals("назад")) {
+                        SendMessage mess = new SendMessage() // Create a message object object
+                                .setChatId(chat_id)
+                                .setText("Чтобы достичь твоей цели, нужно что?");
+                        // Create ReplyKeyboardMarkup object
+                        ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
+                        // Create the keyboard (list of keyboard rows)
+                        List<KeyboardRow> keyboard = new ArrayList<>();
+                        // Create a keyboard row
+                        KeyboardRow row = new KeyboardRow();
+                        // Set each button, you can also use KeyboardButton objects if you need something else than text
+                        row.add("мотивация");
+                        row.add("цель");
+                        row.add("успехи");
+                        row.add("поныть");
+                        // Add the first row to the keyboard
+                        keyboard.add(row);
+                        // Create another keyboard row
+                        row = new KeyboardRow();
+                        keyboardMarkup.setKeyboard(keyboard);
+                        // Add it to the message
+                        mess.setReplyMarkup(keyboardMarkup);
+//                        if (update.hasMessage() && update.getMessage().hasText()) {
+//                            // Set variables
+//                            message_text = update.getMessage().getText();
+//                            targets.add(message_text);
+//                        }
+                        try {
+                            sendMessage(mess); // Sending our message object to user
+                        } catch (TelegramApiException e) {
+                            e.printStackTrace();
+                        }
+                        File file = new File("D:\\dis\\aboba.jpg");
+                        try {
+                            SendPhoto sendPhoto1 = new SendPhoto().setNewPhoto("photo", new FileInputStream(file)).setChatId(chat_id).setCaption(someCollection.getRandomBoring());
+                            sendPhoto(sendPhoto1);
+                        } catch (TelegramApiException e) {
+                            throw new RuntimeException(e);
+                        } catch (FileNotFoundException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                     break;
                 default:
-                    try {
-                        sendMsg(message, Weather.getWeather(message.getText(), model));
-                    } catch (IOException e) {
-                        sendMsg(message, "Город не найден!");
-                    }
+                    System.out.println(targets.get(0));
+                    System.out.println(targets.get(1));
+                    System.out.println(targets.get(2));
+
             }
         }
     }
+
 
 
     public void setStartButtons(SendMessage sendMessage) {
@@ -294,7 +471,7 @@ public class Bot extends TelegramLongPollingBot {
         keyboardFirstRow.add(new KeyboardButton("мотивация"));
         keyboardFirstRow.add(new KeyboardButton("цель"));
         keyboardFirstRow.add(new KeyboardButton("успехи"));
-        keyboardFirstRow.add(new KeyboardButton("поныть хочеца"));
+        keyboardFirstRow.add(new KeyboardButton("поныть"));
 
         keyboardRowList.add(keyboardFirstRow);
         replyKeyboardMarkup.setKeyboard(keyboardRowList);
