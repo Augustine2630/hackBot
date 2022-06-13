@@ -578,7 +578,7 @@ public class Bot extends TelegramLongPollingBot {
                     }
                     break;
                 case "мои успехи":
-                    if (message_text.equals("мои успехи")){
+                    if (message_text.equals("мои успехи")) {
                         SendMessage mess = new SendMessage().setChatId(chat_id).setText(gains.get(0));
                         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
                         // Create the keyboard (list of keyboard rows)
@@ -601,9 +601,9 @@ public class Bot extends TelegramLongPollingBot {
                             throw new RuntimeException(e);
                         }
                     }
-                        break;
+                    break;
                 case "похвастаться":
-                    if (message_text.equals("похвастаться")){
+                    if (message_text.equals("похвастаться")) {
                         SendMessage mess = new SendMessage().setChatId(chat_id).setText("успехи");
                         ReplyKeyboardMarkup keyboardMarkup = new ReplyKeyboardMarkup();
                         // Create the keyboard (list of keyboard rows)
